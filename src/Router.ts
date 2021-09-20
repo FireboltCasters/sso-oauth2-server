@@ -1,18 +1,16 @@
-import TokenVerifier from "./TokenVerifier";
-import ProfileHelper from "./ProfileHelper";
-import LoginView from "./LoginView";
-import LoginHelper from "./LoginHelper";
+import TokenVerifier from './TokenVerifier';
+import ProfileHelper from './ProfileHelper';
+import LoginView from './LoginView';
+import LoginHelper from './LoginHelper';
 
 export default class Router {
+  static configure(router: any) {
+    router
+      .route('/login')
+      .get(LoginView.handleRenderLoginView.bind(null))
+      .post(LoginHelper.handleCredentialsPassed.bind(null));
 
-    static configure(router: any) {
-        router
-            .route("/login")
-            .get(LoginView.handleRenderLoginView.bind(null))
-            .post(LoginHelper.handleCredentialsPassed.bind(null));
-
-        router.post("/verifytoken", TokenVerifier.verifySsoToken.bind(null));
-        router.get("/getProfile", ProfileHelper.getProfile.bind(null));
-    }
-
+    router.post('/verifytoken', TokenVerifier.verifySsoToken.bind(null));
+    router.get('/getProfile', ProfileHelper.getProfile.bind(null));
+  }
 }

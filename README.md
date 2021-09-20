@@ -42,32 +42,39 @@ A simple server package for npm based on https://github.com/ankur-anand/simple-s
 ## Usage
 
 index.js
+
 ```js
-import SsoAuth2Server from "../SsoAuth2Server";
-import Logger from "../Logger";
-import {Connector, UrlHelper} from "studip-api";
+import SsoAuth2Server from '../SsoAuth2Server';
+import Logger from '../Logger';
+import {Connector, UrlHelper} from 'studip-api';
 
 const STUDIP_AUTH_METHOD = async (body, client_id, scope, query) => {
-    Logger.log("Authentification: start");
-    const username = body.username;
-    const password = body.password;
-    //auth or throw error
-    return user;
-}
+  Logger.log('Authentification: start');
+  const username = body.username;
+  const password = body.password;
+  //auth or throw error
+  return user;
+};
 
 const requiredLoginParams = {
-    username: "string",
-    password: "password"
-}
+  username: 'string',
+  password: 'password',
+};
 
 const port = 3010;
-const route = "/studip";
-const sessionSecret = "keyboard cat";
-const jwtSecret = "MySuperSecret";
-let ssoServer = new SsoAuth2Server(port, route, sessionSecret, jwtSecret, STUDIP_AUTH_METHOD, requiredLoginParams);
+const route = '/studip';
+const sessionSecret = 'keyboard cat';
+const jwtSecret = 'MySuperSecret';
+let ssoServer = new SsoAuth2Server(
+  port,
+  route,
+  sessionSecret,
+  jwtSecret,
+  STUDIP_AUTH_METHOD,
+  requiredLoginParams
+);
 ssoServer.start();
 ```
-
 
 ## Contributors
 
