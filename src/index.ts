@@ -1,4 +1,6 @@
 /* istanbul ignore file */
-import Example from "./Example";
+import EnvironmentCredentials from "./EnvironmentCredentials";
+import SsoAuth2Server from "./SsoAuth2Server";
 
-export { Example };
+export { SsoAuth2Server };
+export { EnvironmentCredentials };
