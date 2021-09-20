@@ -3,12 +3,15 @@ import TokenHelper from "../TokenHelper";
 
 test('Decode and Encode will give input', async () => {
     EnvironmentCredentials.SYMETRIC_JWT_TOKEN = "Hallo";
-    const payload = "Payload"
-    expect(TokenHelper.decodeJWT(await TokenHelper.genJwtToken(payload))).toBe(payload);
+    const payload = {data: "Payload"}
+    let encoded = await TokenHelper.genJwtToken(payload);
+    let decoded = TokenHelper.decodeJWT(encoded);
+    expect(decoded.data).toBe(payload.data);
 });
 
 test('Encode is not input', async () => {
     EnvironmentCredentials.SYMETRIC_JWT_TOKEN = "Hallo";
-    const payload = "Payload"
-    expect(await TokenHelper.genJwtToken(payload)).not.toBe(payload);
+    const payload = {data: "Payload"}
+    let encoded = await TokenHelper.genJwtToken(payload);
+    expect(encoded).not.toBe(payload.data);
 });
