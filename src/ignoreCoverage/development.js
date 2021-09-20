@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import SsoAuth2Server from '../SsoAuth2Server';
-import Logger from '../Logger';
+import SsoAuth2Server from './SsoAuth2Server';
+import Logger from './Logger';
 import {Connector, UrlHelper} from 'studip-api';
 
 const STUDIP_AUTH_METHOD = async (body, client_id, scope, query) => {
