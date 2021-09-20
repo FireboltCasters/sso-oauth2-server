@@ -1,5 +1,5 @@
-import EnvironmentCredentials from "../EnvironmentCredentials";
-import TokenHelper from "../TokenHelper";
+import EnvironmentCredentials from '../EnvironmentCredentials';
+import TokenHelper from '../TokenHelper';
 
 test('Decode and Encode will give input', async () => {
     EnvironmentCredentials.SYMETRIC_JWT_TOKEN = "Hallo";
