@@ -51,7 +51,7 @@ export default class LoginHelper {
     const url = new URL(redirect_uri);
     const intrmid = StorageHelper.generateRandomToken();
     StorageHelper.storeApplicationInCache(url.origin, id, intrmid);
-    const redirectURL = `${redirect_uri}?${req.query.response_type}=${intrmid}&state=${req.query.state}`;
+    let redirectURL = `${redirect_uri}?${req.query.response_type}=${intrmid}&state=${req.query.state}`;
     if (EnvironmentCredentials.REDIRECT_MODE) {
       return res.redirect(redirectURL);
     } else {

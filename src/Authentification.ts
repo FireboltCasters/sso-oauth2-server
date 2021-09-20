@@ -19,7 +19,7 @@ export default class Authentification {
     scope: string,
     query: any
   ) {
-    if (Authentification.AUTH_METHOD) {
+    if (!!Authentification.AUTH_METHOD) {
       return await Authentification.AUTH_METHOD(body, client_id, scope, query);
     }
   }

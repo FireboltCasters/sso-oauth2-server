@@ -26,15 +26,15 @@ export default class ProfileHelper {
   static async getProfile(req: any, res: any, next: any) {
     console.log('getProfile');
     console.log('req.headers: ', req.headers);
-    const token = ProfileHelper.extractToken(req);
+    let token = ProfileHelper.extractToken(req);
     console.log('token: ', token);
     const payload = await TokenHelper.decodeJWT(token);
     console.log('Payload: ', payload);
 
-    if (ProfileHelper.CUSTOM_GET_PROFILE_METHOD) {
+    if (!!ProfileHelper.CUSTOM_GET_PROFILE_METHOD) {
       return ProfileHelper.CUSTOM_GET_PROFILE_METHOD(req, res, next, payload);
     } else {
-      const email = payload.user.email;
+      let email = payload.user.email;
 
       //decodeJwtToken
       return res.status(200).json({email: email});
