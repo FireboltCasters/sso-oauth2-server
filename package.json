@@ -1,6 +1,6 @@
 {
   "name": "sso-oauth2-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple package for a single sing-on (SSO) server",
   "main": "index.js",
   "types": "index.d.ts",
