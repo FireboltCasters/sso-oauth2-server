@@ -5,7 +5,7 @@ import LoginHelper from './LoginHelper';
 
 export default class Router {
   static configure(router: any) {
-    router.route("/authParams").get(LoginHelper.handleGetAuthParams.bind(null));
+    router.route('/authParams').get(LoginHelper.handleGetAuthParams.bind(null));
     router
       .route('/login')
       .get(LoginView.handleRenderLoginView.bind(null))
