@@ -34,7 +34,7 @@ const route = '/studip';
 const sessionSecret = 'keyboard cat';
 const jwtSecret = 'MySuperSecret';
 const ssoServer = new SsoAuth2Server(
-    redirectMode,
+  redirectMode,
   port,
   route,
   sessionSecret,

@@ -67,13 +67,13 @@ const route = '/studip';
 const sessionSecret = 'keyboard cat';
 const jwtSecret = 'MySuperSecret';
 const ssoServer = new SsoAuth2Server(
-    redirectMode,
-    port,
-    route,
-    sessionSecret,
-    jwtSecret,
-    STUDIP_AUTH_METHOD,
-    requiredLoginParams
+  redirectMode,
+  port,
+  route,
+  sessionSecret,
+  jwtSecret,
+  STUDIP_AUTH_METHOD,
+  requiredLoginParams
 );
 ssoServer.start();
 ```
