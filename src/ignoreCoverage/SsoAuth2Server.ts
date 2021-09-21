@@ -46,11 +46,11 @@ export default class SsoAuth2Server {
     });
   }
 
-  getExpressApp(){
+  getExpressApp() {
     return this.app;
   }
 
-  getRouter(){
+  getRouter() {
     return this.router;
   }
 
@@ -99,16 +99,16 @@ export default class SsoAuth2Server {
   }
 
   private fullUrl(req: any) {
-    return req.protocol + "://" + req.get('host') + req.originalUrl;
+    return req.protocol + '://' + req.get('host') + req.originalUrl;
   }
 
-  getAllRegisteredRoutes(){
+  getAllRegisteredRoutes() {
     let router = this.router || {stack: []};
     let stack = router.stack;
     let routes: string[] = [];
 
-    for(let layer of stack){
-      routes.push(EnvironmentCredentials.ROUTE+layer.route.path);
+    for (let layer of stack) {
+      routes.push(EnvironmentCredentials.ROUTE + layer.route.path);
     }
     return routes;
   }
@@ -119,7 +119,7 @@ export default class SsoAuth2Server {
       let registeredRoutes = this.getAllRegisteredRoutes();
       console.log(registeredRoutes);
       const url = this.fullUrl(req);
-      const err = new Error('Resource Not Found under: '+url);
+      const err = new Error('Resource Not Found under: ' + url);
       // @ts-ignore
       err.status = 404;
       next(err);
