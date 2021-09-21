@@ -28,11 +28,13 @@ const requiredLoginParams = {
   password: 'password',
 };
 
+const redirectMode = true;
 const port = 3010;
 const route = '/studip';
 const sessionSecret = 'keyboard cat';
 const jwtSecret = 'MySuperSecret';
 const ssoServer = new SsoAuth2Server(
+    redirectMode,
   port,
   route,
   sessionSecret,

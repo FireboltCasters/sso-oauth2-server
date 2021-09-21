@@ -5,6 +5,12 @@ import EnvironmentCredentials from './EnvironmentCredentials';
 const URL = require('url').URL;
 
 export default class LoginHelper {
+
+  static async handleGetAuthParams(req: any, res: any, next: any){
+    let params = Authentification.getRequiredParams();
+    return res.status(200).json({params: params});
+  }
+
   static async handleCredentialsPassed(req: any, res: any, next: any) {
     console.log('doLogin');
     try {

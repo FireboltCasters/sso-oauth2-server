@@ -61,17 +61,19 @@ const requiredLoginParams = {
   password: 'password',
 };
 
+const redirectMode = true;
 const port = 3010;
 const route = '/studip';
 const sessionSecret = 'keyboard cat';
 const jwtSecret = 'MySuperSecret';
-let ssoServer = new SsoAuth2Server(
-  port,
-  route,
-  sessionSecret,
-  jwtSecret,
-  STUDIP_AUTH_METHOD,
-  requiredLoginParams
+const ssoServer = new SsoAuth2Server(
+    redirectMode,
+    port,
+    route,
+    sessionSecret,
+    jwtSecret,
+    STUDIP_AUTH_METHOD,
+    requiredLoginParams
 );
 ssoServer.start();
 ```
