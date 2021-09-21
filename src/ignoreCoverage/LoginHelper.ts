@@ -7,6 +7,7 @@ const URL = require('url').URL;
 export default class LoginHelper {
   static async handleGetAuthParams(req: any, res: any, next: any) {
     let params = Authentification.getRequiredParams();
+    res.set('Access-Control-Allow-Origin', '*');
     return res.status(200).json({params: params});
   }
 
@@ -45,6 +46,7 @@ export default class LoginHelper {
     //TODO check if this is needed
     req.session.user = id;
     if (redirect_uri == null) {
+      res.set('Access-Control-Allow-Origin', '*');
       return res.redirect('/');
     }
 
@@ -58,8 +60,10 @@ export default class LoginHelper {
     StorageHelper.storeApplicationInCache(url.origin, id, intrmid);
     let redirectURL = `${redirect_uri}?${req.query.response_type}=${intrmid}&state=${req.query.state}`;
     if (EnvironmentCredentials.REDIRECT_MODE) {
+      res.set('Access-Control-Allow-Origin', '*');
       return res.redirect(redirectURL);
     } else {
+      res.set('Access-Control-Allow-Origin', '*');
       return res.status(200).json({redirectURL: redirectURL});
     }
   }

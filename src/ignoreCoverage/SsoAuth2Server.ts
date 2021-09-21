@@ -138,6 +138,7 @@ export default class SsoAuth2Server {
       if (statusCode === 500) {
         message = 'Internal Server Error';
       }
+      res.set('Access-Control-Allow-Origin', '*');
       res.status(statusCode).json({message});
     });
   }
