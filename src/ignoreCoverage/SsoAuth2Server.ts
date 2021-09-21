@@ -101,10 +101,16 @@ export default class SsoAuth2Server {
 
   private configureCorsHandler() {
     this.app.use((req: any, res: any, next: any) => {
-      console.log("CORS Middleware");
+      console.log('CORS Middleware');
       res.set('Access-Control-Allow-Origin', '*');
-      res.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-      res.set('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+      res.set(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PATCH, PUT, DELETE, OPTIONS'
+      );
+      res.set(
+        'Access-Control-Allow-Headers',
+        'Origin, Content-Type, X-Auth-Token'
+      );
       next();
     });
   }
