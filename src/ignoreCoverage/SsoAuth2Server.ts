@@ -6,6 +6,7 @@ import engine from 'ejs-mate';
 import morgan from 'morgan';
 import EnvironmentCredentials from './EnvironmentCredentials';
 import Authentification from './Authentification';
+import cors from 'cors';
 
 type AuthCallbackFunctionType = (
   body: any,
@@ -60,8 +61,27 @@ export default class SsoAuth2Server {
     this.configureErrorHandler();
   }
 
+  private allowCrossDomain(req: any, res: any, next: any) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    console.log("Middleware allowCrossDomain");
+
+    console.log(req.method);
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      console.log("OPTIONS METHOD FOUND");
+      res.send(200);
+    }
+    else {
+      next();
+    }
+  };
+
   private configureMiddlewares() {
     this.configureSesseion();
+    this.app.use(cors());
+    this.app.use(this.allowCrossDomain.bind(null));
     this.app.use(express.urlencoded({extended: true}));
     this.app.use(express.json());
     this.app.use(morgan('dev'));

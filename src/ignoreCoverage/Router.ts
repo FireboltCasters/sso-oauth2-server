@@ -8,6 +8,7 @@ export default class Router {
     router.route('/authParams').get(LoginHelper.handleGetAuthParams.bind(null));
     router
       .route('/login')
+      .options((req: any, res: any, next: any) => {})
       .get(LoginView.handleRenderLoginView.bind(null))
       .post(LoginHelper.handleCredentialsPassed.bind(null));
 
