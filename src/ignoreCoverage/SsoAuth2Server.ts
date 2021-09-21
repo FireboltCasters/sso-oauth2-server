@@ -65,18 +65,17 @@ export default class SsoAuth2Server {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    console.log("Middleware allowCrossDomain");
+    console.log('Middleware allowCrossDomain');
 
     console.log(req.method);
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
-      console.log("OPTIONS METHOD FOUND");
+      console.log('OPTIONS METHOD FOUND');
       res.send(200);
-    }
-    else {
+    } else {
       next();
     }
-  };
+  }
 
   private configureMiddlewares() {
     this.configureSesseion();
