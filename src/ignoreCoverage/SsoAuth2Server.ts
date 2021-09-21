@@ -1,4 +1,4 @@
-import express, {Express} from 'express';
+import express, {Express, Router} from 'express';
 import RouterHelper from './Router';
 import session from 'express-session';
 // @ts-ignore
@@ -16,6 +16,7 @@ type AuthCallbackFunctionType = (
 
 export default class SsoAuth2Server {
   private app: Express;
+  private router: Router | undefined;
 
   constructor(
     redirectMode: boolean,
@@ -43,6 +44,14 @@ export default class SsoAuth2Server {
         `sso-server listening on port ${EnvironmentCredentials.PORT}`
       );
     });
+  }
+
+  getExpressApp(){
+    return this.app;
+  }
+
+  getRouter(){
+    return this.router;
   }
 
   private configure() {
@@ -79,6 +88,7 @@ export default class SsoAuth2Server {
 
   private configureRouter() {
     const router = express.Router();
+    this.router = router;
     RouterHelper.configure(router);
     this.app.use(EnvironmentCredentials.ROUTE, router);
   }
@@ -88,10 +98,28 @@ export default class SsoAuth2Server {
     this.configureInternalErrorHandler();
   }
 
+  private fullUrl(req: any) {
+    return req.protocol + "://" + req.get('host') + req.originalUrl;
+  }
+
+  getAllRegisteredRoutes(){
+    let router = this.router || {stack: []};
+    let stack = router.stack;
+    let routes: string[] = [];
+
+    for(let layer of stack){
+      routes.push(EnvironmentCredentials.ROUTE+layer.route.path);
+    }
+    return routes;
+  }
+
   private configure404Error() {
     this.app.use((req, res, next) => {
       // catch 404 and forward to error handler
-      const err = new Error('Resource Not Found');
+      let registeredRoutes = this.getAllRegisteredRoutes();
+      console.log(registeredRoutes);
+      const url = this.fullUrl(req);
+      const err = new Error('Resource Not Found under: '+url);
       // @ts-ignore
       err.status = 404;
       next(err);
