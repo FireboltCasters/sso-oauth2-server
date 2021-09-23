@@ -5,8 +5,6 @@ export default class TokenVerifier {
   static readonly BEARER = 'Bearer';
 
   static async verifySsoToken(req: any, res: any, next: any) {
-    console.log('handle verifySsoToken');
-    console.log(req.body);
 
     const appToken = TokenVerifier.getClientSecret(req);
     const ssoToken = TokenVerifier.getClientCode(req);
@@ -55,12 +53,10 @@ export default class TokenVerifier {
     res: any,
     ssoToken: string
   ) {
-    console.log('Generate Payload');
     // checking if the token passed has been generated
     const payload = TokenVerifier.generatePayload(ssoToken);
     const token = await TokenHelper.genJwtToken(payload);
     StorageHelper.deleteIntrmToken(ssoToken); // delete the itremCache key for no futher use,
-    console.log('Response with token');
     return TokenVerifier.responseWithAccessToken(res, token);
   }
 

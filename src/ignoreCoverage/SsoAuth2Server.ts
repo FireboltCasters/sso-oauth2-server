@@ -65,12 +65,9 @@ export default class SsoAuth2Server {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    console.log('Middleware allowCrossDomain');
 
-    console.log(req.method);
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
-      console.log('OPTIONS METHOD FOUND');
       res.send(200);
     } else {
       next();
@@ -120,7 +117,6 @@ export default class SsoAuth2Server {
 
   private configureCorsHandler() {
     this.app.use((req: any, res: any, next: any) => {
-      console.log('CORS Middleware');
       res.set('Access-Control-Allow-Origin', '*');
       res.set(
         'Access-Control-Allow-Methods',
@@ -153,7 +149,6 @@ export default class SsoAuth2Server {
     this.app.use((req, res, next) => {
       // catch 404 and forward to error handler
       let registeredRoutes = this.getAllRegisteredRoutes();
-      console.log(registeredRoutes);
       const url = this.fullUrl(req);
       const err = new Error('Resource Not Found under: ' + url);
       // @ts-ignore

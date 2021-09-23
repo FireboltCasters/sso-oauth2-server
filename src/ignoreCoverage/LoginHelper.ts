@@ -12,7 +12,6 @@ export default class LoginHelper {
   }
 
   static async handleCredentialsPassed(req: any, res: any, next: any) {
-    console.log('doLogin');
     try {
       const dataToStore = await Authentification.handleAuth(
         req.body,
