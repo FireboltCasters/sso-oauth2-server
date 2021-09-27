@@ -76,7 +76,11 @@ const ssoServer = new SsoAuth2Server(
   requiredLoginParams
 );
 
-ssoServer.registerService("https://<yourOriginDomain>.com", "<myAuthClientName>", "<yourSecret>");
+ssoServer.registerService(
+  'https://<yourOriginDomain>.com',
+  '<myAuthClientName>',
+  '<yourSecret>'
+);
 
 ssoServer.start();
 ```
@@ -90,6 +94,7 @@ ssoServer.getAllRegisteredRoutes();
 ```
 
 By default the routes will be:
+
 ```
 LOGIN: localhost/<customSubroute>/login
 AUTH_PARAMS: localhost/<customSubroute>/authParams
@@ -97,12 +102,12 @@ AUTH_PARAMS: localhost/<customSubroute>/verifytoken
 PROFILE: localhost/<customSubroute>/getProfile
 ```
 
-
 ## Client
 
 A client can now authentificate.
 
 1. Get informations about needed auth Params
+
 ```
 curl http://yourSSoAuth2ServerDomain:3010/customSubroute/authParams
 
@@ -116,14 +121,15 @@ curl http://yourSSoAuth2ServerDomain:3010/customSubroute/authParams
 ```
 
 2. Your client know knows what to send as body
+
 ```js
-let body= {username: 'me', password: "mycat"};
-let url = "http://yourSSoAuth2ServerDomain:3010/customSubroute/login?";
-url += "client_id=sso_consumer&";
-url += "redirect_uri=<http://redirectURL..../callback>&"; //but url encoded
-url += "response_type=code&";
-url += "scope=email firstname lastname&";
-url += "state=<receivedStateFromOauthServer>";
+let body = {username: 'me', password: 'mycat'};
+let url = 'http://yourSSoAuth2ServerDomain:3010/customSubroute/login?';
+url += 'client_id=sso_consumer&';
+url += 'redirect_uri=<http://redirectURL..../callback>&'; //but url encoded
+url += 'response_type=code&';
+url += 'scope=email firstname lastname&';
+url += 'state=<receivedStateFromOauthServer>';
 axios.post(url, body);
 ```
 

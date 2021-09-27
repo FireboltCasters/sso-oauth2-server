@@ -14,11 +14,11 @@ const sessionApp: {[id: string]: any} = {};
 const intrmTokenCache: {[id: string]: any[]} = {};
 
 export default class StorageHelper {
-
   static originAppName: {[key: string]: string} = {};
 
-  static setOriginAppName(origin: string, appName: string){
-    if(!appName){ //undefined or null
+  static setOriginAppName(origin: string, appName: string) {
+    if (!appName) {
+      //undefined or null
       delete StorageHelper.originAppName[origin];
     } else {
       StorageHelper.originAppName[origin] = appName;
@@ -28,8 +28,9 @@ export default class StorageHelper {
   // app token to validate the request is coming from the authenticated server only.
   static appTokenDB: {[appName: string]: string} = {};
 
-  static setAppTokenSecret(appName: string, secret: string){
-    if(!secret){ //undefined or null
+  static setAppTokenSecret(appName: string, secret: string) {
+    if (!secret) {
+      //undefined or null
       delete StorageHelper.appTokenDB[appName];
     } else {
       StorageHelper.appTokenDB[appName] = secret;
@@ -38,8 +39,8 @@ export default class StorageHelper {
 
   static allowOrigin: {[origin: string]: boolean} = {};
 
-  static setAllowOrigin(origin: string, allowed: boolean){
-    if(allowed){
+  static setAllowOrigin(origin: string, allowed: boolean) {
+    if (allowed) {
       StorageHelper.allowOrigin[origin] = true;
     } else {
       delete StorageHelper.allowOrigin[origin];
@@ -117,7 +118,7 @@ export default class StorageHelper {
   }
 
   static isAllowedOrigin(urlOrigin: string) {
-    if(StorageHelper.allowOrigin["*"]){
+    if (StorageHelper.allowOrigin['*']) {
       return true;
     }
     return StorageHelper.allowOrigin[urlOrigin];
