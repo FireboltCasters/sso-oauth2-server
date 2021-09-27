@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import EnvironmentCredentials from './EnvironmentCredentials';
 import Authentification from './Authentification';
 import cors from 'cors';
+import StorageHelper from "./StorageHelper";
 
 type AuthCallbackFunctionType = (
   body: any,
@@ -16,6 +17,16 @@ type AuthCallbackFunctionType = (
 ) => any;
 
 export default class SsoAuth2Server {
+
+  static ROUTE_LOGIN = "login";
+  static ROUTE_AUTHPARAMS = "authParams";
+  static ROUTE_VERIFYTOKEN = "verifytoken";
+  static ROUTE_GETPROFILE = "getProfile";
+
+  static PARAM_REDIRECT_URI = "redirect_uri";
+  static PARAM_RESPONSE_TYPE = "response_type";
+  static PARAM_STATE = "state";
+
   private app: Express;
   private router: Router | undefined;
 
@@ -45,6 +56,12 @@ export default class SsoAuth2Server {
         `sso-server listening on port ${EnvironmentCredentials.PORT}`
       );
     });
+  }
+
+  registerService(origin: string, appName: string, secret: string){
+    StorageHelper.setOriginAppName(origin, appName);
+    StorageHelper.setAppTokenSecret(appName, secret);
+    StorageHelper.setAllowOrigin(origin, true);
   }
 
   getExpressApp() {

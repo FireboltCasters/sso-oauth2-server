@@ -5,8 +5,8 @@ const hashids = new Hashids();
 const deHyphenatedUUID = () => uuidv4().replace(/-/gi, '');
 const encodedId = () => hashids.encodeHex(deHyphenatedUUID());
 
-// A temporary cahce to store all the application that has login using the current session.
-// It can be useful for variuos audit purpose
+// A temporary cache to store all the application that has login using the current session.
+// It can be useful for various audit purpose
 const sessionUser: {[id: string]: any} = {};
 const sessionApp: {[id: string]: any} = {};
 
@@ -14,23 +14,37 @@ const sessionApp: {[id: string]: any} = {};
 const intrmTokenCache: {[id: string]: any[]} = {};
 
 export default class StorageHelper {
-  static originAppName: {[key: string]: string} = {
-    'http://192.168.178.35:8055': 'sso_consumer',
-    'http://192.168.178.35': 'simple_sso_consumer',
-  };
+
+  static originAppName: {[key: string]: string} = {};
+
+  static setOriginAppName(origin: string, appName: string){
+    if(!appName){ //undefined or null
+      delete StorageHelper.originAppName[origin];
+    } else {
+      StorageHelper.originAppName[origin] = appName;
+    }
+  }
 
   // app token to validate the request is coming from the authenticated server only.
-  static appTokenDB: {[appName: string]: string} = {
-    sso_consumer: 'l1Q7zkOL59cRqWBkQ12ZiGVW2DBL',
-    simple_sso_consumer: 'l1Q7zkOL59cRqWBkQ12ZiGVW2DBL',
-  };
+  static appTokenDB: {[appName: string]: string} = {};
 
-  static alloweOrigin: {[origin: string]: boolean} = {
-    'http://localhost': true,
-    '127.0.0.1': true,
-    'http://192.168.178.35:8055': true,
-    'http://192.168.178.35': true,
-  };
+  static setAppTokenSecret(appName: string, secret: string){
+    if(!secret){ //undefined or null
+      delete StorageHelper.appTokenDB[appName];
+    } else {
+      StorageHelper.appTokenDB[appName] = secret;
+    }
+  }
+
+  static allowOrigin: {[origin: string]: boolean} = {};
+
+  static setAllowOrigin(origin: string, allowed: boolean){
+    if(allowed){
+      StorageHelper.allowOrigin[origin] = true;
+    } else {
+      delete StorageHelper.allowOrigin[origin];
+    }
+  }
 
   static generateRandomToken(): string {
     return encodedId();
@@ -103,6 +117,9 @@ export default class StorageHelper {
   }
 
   static isAllowedOrigin(urlOrigin: string) {
-    return StorageHelper.alloweOrigin[urlOrigin];
+    if(StorageHelper.allowOrigin["*"]){
+      return true;
+    }
+    return StorageHelper.allowOrigin[urlOrigin];
   }
 }

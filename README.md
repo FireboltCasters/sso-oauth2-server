@@ -63,7 +63,7 @@ const requiredLoginParams = {
 
 const redirectMode = true;
 const port = 3010;
-const route = '/studip';
+const route = '/<customSubroute>';
 const sessionSecret = 'keyboard cat';
 const jwtSecret = 'MySuperSecret';
 const ssoServer = new SsoAuth2Server(
@@ -75,8 +75,59 @@ const ssoServer = new SsoAuth2Server(
   STUDIP_AUTH_METHOD,
   requiredLoginParams
 );
+
+ssoServer.registerService("https://<yourOriginDomain>.com", "<myAuthClientName>", "<yourSecret>");
+
 ssoServer.start();
 ```
+
+## Routes
+
+You can always see your registered Routes by calling:
+
+```js
+ssoServer.getAllRegisteredRoutes();
+```
+
+By default the routes will be:
+```
+LOGIN: localhost/<customSubroute>/login
+AUTH_PARAMS: localhost/<customSubroute>/authParams
+AUTH_PARAMS: localhost/<customSubroute>/verifytoken
+PROFILE: localhost/<customSubroute>/getProfile
+```
+
+
+## Client
+
+A client can now authentificate.
+
+1. Get informations about needed auth Params
+```
+curl http://yourSSoAuth2ServerDomain:3010/customSubroute/authParams
+
+-->
+{
+    params: {
+        username: 'string',
+        password: 'password',
+    }
+}
+```
+
+2. Your client know knows what to send as body
+```js
+let body= {username: 'me', password: "mycat"};
+let url = "http://yourSSoAuth2ServerDomain:3010/customSubroute/login?";
+url += "client_id=sso_consumer&";
+url += "redirect_uri=<http://redirectURL..../callback>&"; //but url encoded
+url += "response_type=code&";
+url += "scope=email firstname lastname&";
+url += "state=<receivedStateFromOauthServer>";
+axios.post(url, body);
+```
+
+3. Your client
 
 ## Contributors
 

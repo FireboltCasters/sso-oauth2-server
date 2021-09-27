@@ -1,6 +1,7 @@
 import StorageHelper from './StorageHelper';
 import Authentification from './Authentification';
 import EnvironmentCredentials from './EnvironmentCredentials';
+import SsoAuth2Server from "./SsoAuth2Server";
 
 const URL = require('url').URL;
 
@@ -53,11 +54,13 @@ export default class LoginHelper {
   }
 
   static redirectUserToCallbackURL(req: any, res: any, id: string) {
-    const {redirect_uri} = req.query;
+    const redirect_uri = req.query[SsoAuth2Server.PARAM_REDIRECT_URI];
     const url = new URL(redirect_uri);
     const intrmid = StorageHelper.generateRandomToken();
     StorageHelper.storeApplicationInCache(url.origin, id, intrmid);
-    let redirectURL = `${redirect_uri}?${req.query.response_type}=${intrmid}&state=${req.query.state}`;
+    let redirectURL = `${redirect_uri}?`; //set to redirectURL
+    redirectURL += `${req.query[SsoAuth2Server.PARAM_RESPONSE_TYPE]}=${intrmid}&`; //set responsetype
+    redirectURL += `${SsoAuth2Server.PARAM_STATE}=${req.query[SsoAuth2Server.PARAM_STATE]}`; //set state
     if (EnvironmentCredentials.REDIRECT_MODE) {
       res.set('Access-Control-Allow-Origin', '*');
       return res.redirect(redirectURL);
