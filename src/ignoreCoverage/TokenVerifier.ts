@@ -5,7 +5,6 @@ export default class TokenVerifier {
   static readonly BEARER = 'Bearer';
 
   static async verifySsoToken(req: any, res: any, next: any) {
-
     const appToken = TokenVerifier.getClientSecret(req);
     const ssoToken = TokenVerifier.getClientCode(req);
     // if the application token is not present or ssoToken request is invalid
