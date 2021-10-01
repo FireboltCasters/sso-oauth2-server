@@ -14,8 +14,7 @@ const sessionApp: {[id: string]: any} = {};
 const intrmTokenCache: {[id: string]: any[]} = {};
 
 export default class StorageHelper {
-
-  static ORIGIN_WILDCARD = "public"
+  static ORIGIN_WILDCARD = 'public';
 
   static originAppName: {[key: string]: string} = {};
 
@@ -28,7 +27,7 @@ export default class StorageHelper {
     }
   }
 
-  static isAppOriginRegistered(origin: string){
+  static isAppOriginRegistered(origin: string) {
     return !!StorageHelper.originAppName[origin];
   }
 
@@ -71,7 +70,10 @@ export default class StorageHelper {
     id: string,
     intrmToken: string
   ) {
-    if(!StorageHelper.isAppOriginRegistered(origin) && StorageHelper.isAppOriginRegistered(StorageHelper.ORIGIN_WILDCARD)){
+    if (
+      !StorageHelper.isAppOriginRegistered(origin) &&
+      StorageHelper.isAppOriginRegistered(StorageHelper.ORIGIN_WILDCARD)
+    ) {
       origin = StorageHelper.ORIGIN_WILDCARD;
     }
 
@@ -128,7 +130,7 @@ export default class StorageHelper {
   }
 
   static isAllowedOrigin(urlOrigin: string) {
-    if(StorageHelper.allowOrigin["*"]){
+    if (StorageHelper.allowOrigin['*']) {
       return true;
     }
     return StorageHelper.allowOrigin[urlOrigin];
