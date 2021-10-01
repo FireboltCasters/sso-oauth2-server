@@ -15,6 +15,8 @@ const intrmTokenCache: {[id: string]: any[]} = {};
 
 export default class StorageHelper {
 
+  static ORIGIN_WILDCARD = "public"
+
   static originAppName: {[key: string]: string} = {};
 
   static setOriginAppName(origin: string, appName: string){
@@ -23,6 +25,10 @@ export default class StorageHelper {
     } else {
       StorageHelper.originAppName[origin] = appName;
     }
+  }
+
+  static isAppOriginRegistered(origin: string){
+    return !!StorageHelper.originAppName[origin];
   }
 
   // app token to validate the request is coming from the authenticated server only.
@@ -63,15 +69,18 @@ export default class StorageHelper {
     id: string,
     intrmToken: string
   ) {
+    if(!StorageHelper.isAppOriginRegistered(origin) && StorageHelper.isAppOriginRegistered(StorageHelper.ORIGIN_WILDCARD)){
+      origin = StorageHelper.ORIGIN_WILDCARD;
+    }
+
     if (sessionApp[id] == null) {
       sessionApp[id] = {
         [StorageHelper.originAppName[origin]]: true,
       };
-      StorageHelper.fillIntrmTokenCache(origin, id, intrmToken);
     } else {
       sessionApp[id][StorageHelper.originAppName[origin]] = true;
-      StorageHelper.fillIntrmTokenCache(origin, id, intrmToken);
     }
+    StorageHelper.fillIntrmTokenCache(origin, id, intrmToken);
   }
 
   static isSessionTokenAllowedForAppName(
@@ -117,7 +126,7 @@ export default class StorageHelper {
   }
 
   static isAllowedOrigin(urlOrigin: string) {
-    if(StorageHelper.allowOrigin["*"]){
+    if(StorageHelper.allowOrigin[StorageHelper.ORIGIN_WILDCARD]){
       return true;
     }
     return StorageHelper.allowOrigin[urlOrigin];
