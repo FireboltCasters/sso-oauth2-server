@@ -3,10 +3,11 @@ import TokenVerifier from './TokenVerifier';
 import EnvironmentCredentials from './EnvironmentCredentials';
 
 type CallbackFunctionAnyReturn = (
-  body: any,
-  client_id: string,
-  scope: string,
-  query: any
+    req: any,
+    res: any,
+    next: any,
+    payload: any,
+    provider: any
 ) => any;
 
 export default class ProfileHelper {
@@ -27,16 +28,17 @@ export default class ProfileHelper {
   static async getProfile(req: any, res: any, next: any) {
     let token = ProfileHelper.extractToken(req);
     const payload = await TokenHelper.decodeJWT(token);
+    const provider = EnvironmentCredentials.PROVIDER_NAME;
 
     if (!!ProfileHelper.CUSTOM_GET_PROFILE_METHOD) {
-      return ProfileHelper.CUSTOM_GET_PROFILE_METHOD(req, res, next, payload);
+      return ProfileHelper.CUSTOM_GET_PROFILE_METHOD(req, res, next, payload, provider);
     } else {
       let email = payload.user.email;
 
       //decodeJwtToken
       return res
         .status(200)
-        .json({email: email, provider: EnvironmentCredentials.PROVIDER_NAME});
+        .json({email: email, provider: provider, payload: payload});
     }
   }
 }
