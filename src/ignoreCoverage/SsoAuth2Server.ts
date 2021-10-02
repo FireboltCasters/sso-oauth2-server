@@ -30,6 +30,7 @@ export default class SsoAuth2Server {
   private router: Router | undefined;
 
   constructor(
+      providerName: string,
     redirectMode: boolean,
     port: number,
     route: string,
@@ -39,6 +40,7 @@ export default class SsoAuth2Server {
     requiredLoginParams: any
   ) {
     this.app = express();
+    EnvironmentCredentials.PROVIDER_NAME = providerName;
     EnvironmentCredentials.REDIRECT_MODE = redirectMode;
     EnvironmentCredentials.PORT = port;
     EnvironmentCredentials.ROUTE = route;

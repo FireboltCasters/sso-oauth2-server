@@ -1,4 +1,5 @@
 export default class EnvironmentCredentials {
+  static PROVIDER_NAME = "myCustomSSO";
   static REDIRECT_MODE = true;
   static ROUTE = '/simplesso';
   static SESSION_SECRET = 'keyboard cat';
