@@ -3,11 +3,11 @@ import TokenVerifier from './TokenVerifier';
 import EnvironmentCredentials from './EnvironmentCredentials';
 
 type CallbackFunctionAnyReturn = (
-    req: any,
-    res: any,
-    next: any,
-    payload: any,
-    provider: any
+  req: any,
+  res: any,
+  next: any,
+  payload: any,
+  provider: any
 ) => any;
 
 export default class ProfileHelper {
@@ -31,7 +31,13 @@ export default class ProfileHelper {
     const provider = EnvironmentCredentials.PROVIDER_NAME;
 
     if (!!ProfileHelper.CUSTOM_GET_PROFILE_METHOD) {
-      return ProfileHelper.CUSTOM_GET_PROFILE_METHOD(req, res, next, payload, provider);
+      return ProfileHelper.CUSTOM_GET_PROFILE_METHOD(
+        req,
+        res,
+        next,
+        payload,
+        provider
+      );
     } else {
       let email = payload.user.email;
 
