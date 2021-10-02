@@ -1,6 +1,6 @@
 import TokenHelper from './TokenHelper';
 import TokenVerifier from './TokenVerifier';
-import EnvironmentCredentials from "./EnvironmentCredentials";
+import EnvironmentCredentials from './EnvironmentCredentials';
 
 type CallbackFunctionAnyReturn = (
   body: any,
@@ -34,7 +34,9 @@ export default class ProfileHelper {
       let email = payload.user.email;
 
       //decodeJwtToken
-      return res.status(200).json({email: email, provider: EnvironmentCredentials.PROVIDER_NAME});
+      return res
+        .status(200)
+        .json({email: email, provider: EnvironmentCredentials.PROVIDER_NAME});
     }
   }
 }

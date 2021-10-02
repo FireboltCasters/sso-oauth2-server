@@ -30,7 +30,7 @@ export default class SsoAuth2Server {
   private router: Router | undefined;
 
   constructor(
-      providerName: string,
+    providerName: string,
     redirectMode: boolean,
     port: number,
     route: string,
